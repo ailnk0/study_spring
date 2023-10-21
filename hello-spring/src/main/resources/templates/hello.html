@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:text="'Hello ' + ${data}">
+    <!-- 이 영역은 th:text가 동작하지 않을 경우 디버깅 용도로 보여준다. -->
+    Hello {EMPTY}
+</p>
+</body>
+</html>
