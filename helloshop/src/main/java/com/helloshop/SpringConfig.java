@@ -1,0 +1,22 @@
+package com.helloshop;
+
+import com.helloshop.repository.MemberRepository;
+import com.helloshop.repository.MemoryMemberRepository;
+import com.helloshop.service.MemberService;
+import java.util.HashMap;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SpringConfig {
+
+  @Bean
+  public MemberService memberService() {
+    return new MemberService(memberRepository());
+  }
+
+  @Bean
+  public MemberRepository memberRepository() {
+    return new MemoryMemberRepository(new HashMap<>());
+  }
+}

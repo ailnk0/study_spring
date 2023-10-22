@@ -4,12 +4,10 @@ import com.helloshop.repository.Member;
 import com.helloshop.repository.MemberRepository;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.stereotype.Service;
 
 /**
  * Service class for managing members.
  */
-@Service
 public class MemberService {
 
   private final MemberRepository repo;
