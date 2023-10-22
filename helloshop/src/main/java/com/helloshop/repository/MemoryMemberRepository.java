@@ -1,6 +1,7 @@
 package com.helloshop.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,8 +19,8 @@ public class MemoryMemberRepository implements MemberRepository {
    *
    * @param store the store to use for storing members
    */
-  public MemoryMemberRepository(Map<Long, Member> store) {
-    this.store = store;
+  public MemoryMemberRepository() {
+    this.store = new HashMap<>();
   }
 
   /**
@@ -29,8 +30,8 @@ public class MemoryMemberRepository implements MemberRepository {
    * @return an optional containing the inserted member, or empty if the insert failed
    */
   @Override
-  public Optional<Member> insert(Member member) {
-    return Optional.of(member).map(m -> {
+  public Optional<Member> save(Member member) {
+    return Optional.ofNullable(member).map(m -> {
       m.setId(++sequence);
       store.put(m.getId(), m);
       return m;
@@ -67,5 +68,23 @@ public class MemoryMemberRepository implements MemberRepository {
   @Override
   public List<Member> findAll() {
     return new ArrayList<>(store.values());
+  }
+
+  /**
+   * clear a list of all members in the store.
+   */
+  @Override
+  public void clear() {
+    store.clear();
+  }
+
+  /**
+   * Returns the store of members as a map with the member ID as the key and the member object as
+   * the value.
+   *
+   * @return the store of members as a map
+   */
+  Map<Long, Member> getStore() {
+    return store;
   }
 }

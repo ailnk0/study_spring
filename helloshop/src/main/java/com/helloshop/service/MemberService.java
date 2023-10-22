@@ -30,7 +30,7 @@ public class MemberService {
    */
   public Long join(Member member) {
     validateDuplicateMember(member);
-    repo.insert(member);
+    repo.save(member);
     return member.getId();
   }
 
@@ -42,8 +42,7 @@ public class MemberService {
    */
   private void validateDuplicateMember(Member member) {
     repo.findByEmail(member.getEmail()).ifPresent(m -> {
-      throw new IllegalStateException(
-          "This email has already been registered. Please use a different email.");
+      throw new JoinInDuplicateException(member.getEmail());
     });
   }
 

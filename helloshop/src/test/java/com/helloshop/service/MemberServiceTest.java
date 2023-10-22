@@ -1,10 +1,11 @@
 package com.helloshop.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.helloshop.repository.Member;
 import com.helloshop.repository.MemoryMemberRepository;
-import java.util.HashMap;
-import java.util.Map;
-import org.assertj.core.api.Assertions;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,25 +15,17 @@ import org.junit.jupiter.api.Test;
  */
 class MemberServiceTest {
 
-  Map<Long, Member> store;
   MemoryMemberRepository repo;
   MemberService service;
-
-  Member member1;
-  Member member2;
 
   /**
    * Sets up the test fixture.
    */
   @BeforeEach
   void setUp() {
-    member1 = new Member(1L, "test1@test.com");
-    member2 = new Member(2L, "test2@test.com");
-    store = new HashMap<>();
-    store.put(member1.getId(), member1);
-    store.put(member2.getId(), member2);
-
-    repo = new MemoryMemberRepository(store);
+    repo = new MemoryMemberRepository();
+    repo.save(new Member("test1@test.com"));
+    repo.save(new Member("test2@test.com"));
     service = new MemberService(repo);
   }
 
@@ -48,14 +41,20 @@ class MemberServiceTest {
    */
   @Test
   void join() {
-    Member newMember = new Member(3L, "test3@test.com");
+    String newEmail = "test3@test.com";
+    service.join(new Member(newEmail));
 
-    Assertions.assertThat(service.join(newMember)).isEqualTo(newMember.getId());
-    Assertions.assertThat(store.containsValue(newMember)).isTrue();
-    Assertions.assertThatThrownBy(() -> service.join(newMember))
-        .isInstanceOf(IllegalStateException.class)
-        .hasMessageContaining(
-            "This email has already been registered. Please use a different email.");
+    assertThat(repo.findByEmail(newEmail)).isPresent();
+  }
+
+  @Test
+  public void joinInDuplicate() {
+    String newEmail = "test3@test.com";
+    service.join(new Member(newEmail));
+
+    assertThatThrownBy(() -> service.join(new Member(newEmail)))
+        .isInstanceOf(JoinInDuplicateException.class)
+        .hasMessageContaining(newEmail);
   }
 
   /**
@@ -63,7 +62,11 @@ class MemberServiceTest {
    */
   @Test
   void findMembers() {
-    Assertions.assertThat(service.findMembers().size()).isEqualTo(2);
+    List<Member> all = service.findMembers();
+    assertThat(all).hasSize(2)
+        .anySatisfy(m -> assertThat(m.getEmail()).isEqualTo("test1@test.com"))
+        .anySatisfy(m -> assertThat(m.getEmail()).isEqualTo("test2@test.com"))
+        .noneSatisfy(m -> assertThat(m.getEmail()).isEqualTo("test3@test.com"));
   }
 
   /**
@@ -71,8 +74,8 @@ class MemberServiceTest {
    */
   @Test
   void findOne() {
-    Assertions.assertThat(service.findOne(1L)).contains(member1);
-    Assertions.assertThat(service.findOne(2L)).contains(member2);
-    Assertions.assertThat(service.findOne(3L)).isEmpty();
+    assertThat(service.findOne(1L)).isPresent();
+    assertThat(service.findOne(2L)).isPresent();
+    assertThat(service.findOne(3L)).isEmpty();
   }
 }

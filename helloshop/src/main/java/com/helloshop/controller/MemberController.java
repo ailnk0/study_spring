@@ -15,7 +15,6 @@ public class MemberController {
 
   public MemberController(MemberService service) {
     this.service = service;
-    this.service.join(new Member("admin@helloshop.com"));
   }
 
   @GetMapping("members")
