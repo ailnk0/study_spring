@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.helloshop.repository.Member;
 import com.helloshop.repository.MemoryMemberRepository;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,18 +42,14 @@ class MemberServiceTest {
   void join() {
     String newEmail = "test3@test.com";
     service.join(new Member(newEmail));
-
     assertThat(repo.findByEmail(newEmail)).isPresent();
   }
 
   @Test
   public void joinInDuplicate() {
-    String newEmail = "test3@test.com";
-    service.join(new Member(newEmail));
-
-    assertThatThrownBy(() -> service.join(new Member(newEmail)))
-        .isInstanceOf(JoinInDuplicateException.class)
-        .hasMessageContaining(newEmail);
+    String newEmail = "test1@test.com";
+    assertThatThrownBy(() -> service.join(new Member(newEmail))).isInstanceOf(
+        JoinInDuplicateException.class).hasMessageContaining(newEmail);
   }
 
   /**
@@ -62,8 +57,7 @@ class MemberServiceTest {
    */
   @Test
   void findMembers() {
-    List<Member> all = service.findMembers();
-    assertThat(all).hasSize(2)
+    assertThat(service.findMembers()).hasSize(2)
         .anySatisfy(m -> assertThat(m.getEmail()).isEqualTo("test1@test.com"))
         .anySatisfy(m -> assertThat(m.getEmail()).isEqualTo("test2@test.com"))
         .noneSatisfy(m -> assertThat(m.getEmail()).isEqualTo("test3@test.com"));
