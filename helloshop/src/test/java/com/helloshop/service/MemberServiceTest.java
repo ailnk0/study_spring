@@ -54,7 +54,8 @@ class MemberServiceTest {
     Assertions.assertThat(store.containsValue(newMember)).isTrue();
     Assertions.assertThatThrownBy(() -> service.join(newMember))
         .isInstanceOf(IllegalStateException.class)
-        .hasMessageContaining("Email already exists.");
+        .hasMessageContaining(
+            "This email has already been registered. Please use a different email.");
   }
 
   /**
