@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
 /**
  * Repository for managing members in memory.
  */
+@Repository
 public class MemoryMemberRepository implements MemberRepository {
 
   private final Map<Long, Member> store;
