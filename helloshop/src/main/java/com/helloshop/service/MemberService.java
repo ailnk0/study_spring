@@ -44,7 +44,8 @@ public class MemberService {
    */
   private void validateDuplicateMember(Member member) {
     repo.findByEmail(member.getEmail()).ifPresent(m -> {
-      throw new IllegalStateException("Email already exists.");
+      throw new IllegalStateException(
+          "This email has already been registered. Please use a different email.");
     });
   }
 
