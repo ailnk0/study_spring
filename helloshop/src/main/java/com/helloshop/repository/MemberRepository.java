@@ -14,7 +14,7 @@ public interface MemberRepository {
    * @param member the member to insert
    * @return an optional containing the inserted member, or empty if the insert failed
    */
-  Optional<Member> save(Member member);
+  Member save(Member member);
 
   /**
    * Finds the member with the given ID in the database.
@@ -38,9 +38,4 @@ public interface MemberRepository {
    * @return a list of all members in the database
    */
   List<Member> findAll();
-
-  /**
-   * clear a list of all members in the database.
-   */
-  void clear();
 }

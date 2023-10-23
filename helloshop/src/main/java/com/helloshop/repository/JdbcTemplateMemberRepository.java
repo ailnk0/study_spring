@@ -19,14 +19,14 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
   }
 
   @Override
-  public Optional<Member> save(Member member) {
+  public Member save(Member member) {
     SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
     jdbcInsert.withTableName("member").usingGeneratedKeyColumns("id");
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("email", member.getEmail());
     Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
     member.setId(key.longValue());
-    return Optional.of(member);
+    return member;
   }
 
   @Override
@@ -47,10 +47,6 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
   public List<Member> findAll() {
     return jdbcTemplate
         .query("select * from member", memberRowMapper());
-  }
-
-  @Override
-  public void clear() {
   }
 
   private RowMapper<Member> memberRowMapper() {

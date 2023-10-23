@@ -37,7 +37,7 @@ class MemoryMemberRepositoryTest {
   @Test
   void save() {
     Member member = new Member("test3@test.com");
-    Member newMember = repo.save(member).orElseThrow();
+    Member newMember = repo.save(member);
 
     assertThat(newMember.getEmail()).isEqualTo(member.getEmail());
     assertThat(repo.getStore().values()).contains(newMember);

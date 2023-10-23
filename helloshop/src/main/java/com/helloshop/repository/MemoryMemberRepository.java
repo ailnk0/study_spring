@@ -30,12 +30,10 @@ public class MemoryMemberRepository implements MemberRepository {
    * @return an optional containing the inserted member, or empty if the insert failed
    */
   @Override
-  public Optional<Member> save(Member member) {
-    return Optional.ofNullable(member).map(m -> {
-      m.setId(++sequence);
-      store.put(m.getId(), m);
-      return m;
-    });
+  public Member save(Member member) {
+    member.setId(++sequence);
+    store.put(member.getId(), member);
+    return member;
   }
 
   /**
@@ -73,7 +71,6 @@ public class MemoryMemberRepository implements MemberRepository {
   /**
    * clear a list of all members in the store.
    */
-  @Override
   public void clear() {
     store.clear();
   }
