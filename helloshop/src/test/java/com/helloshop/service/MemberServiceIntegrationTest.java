@@ -11,10 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@Transactional
 public class MemberServiceIntegrationTest {
 
   @Autowired
@@ -25,21 +23,19 @@ public class MemberServiceIntegrationTest {
 
   @BeforeEach
   void setUp() {
-    repo.save(new Member("test1@test.com"));
-    repo.save(new Member("test2@test.com"));
   }
 
   @AfterEach
   void tearDown() {
     if (repo instanceof MemoryMemberRepository memRepo) {
-      // Transactional MemoryMemberRepository
+      // TODO: Transactional MemoryMemberRepository
       memRepo.clear();
     }
   }
 
   @Test
   public void join() {
-    Member member = new Member("test3@test.com");
+    Member member = new Member("test@test.com");
     Long id = service.join(member);
     repo.findById(id).map(Member::getEmail).ifPresent(email ->
         assertThat(email).isEqualTo(member.getEmail())
@@ -48,7 +44,8 @@ public class MemberServiceIntegrationTest {
 
   @Test
   public void joinInDuplicate() {
-    Member member = new Member("test1@test.com");
+    Member member = new Member("test@test.com");
+    service.join(member);
     assertThatThrownBy(() -> service.join(member))
         .isInstanceOf(JoinInDuplicateException.class)
         .hasMessageContaining(member.getEmail());
