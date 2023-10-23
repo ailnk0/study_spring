@@ -1,14 +1,24 @@
 package com.helloshop.repository;
 
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Represents a member of the HelloShop application.
  */
+@Entity
 public class Member {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String email;
+
+  public Member() {
+  }
 
   /**
    * Creates a new member with the given email address.
