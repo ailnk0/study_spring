@@ -2,11 +2,11 @@ package hello.core.member.domain;
 
 public interface Service {
 
-  Member signUp(Member member);
+  Member create(Member member);
 
-  Member findMember(String id);
+  Member update(Member member);
 
-  void deleteMember(String id);
+  void deleteById(String id);
 
-  Member updateMember(Member member);
+  Member findById(String id);
 }

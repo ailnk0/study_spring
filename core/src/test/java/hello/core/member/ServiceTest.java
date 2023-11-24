@@ -1,5 +1,6 @@
 package hello.core.member;
 
+import hello.core.member.domain.Level;
 import hello.core.member.domain.Member;
 import hello.core.member.domain.Service;
 import org.assertj.core.api.Assertions;
@@ -11,14 +12,9 @@ public class ServiceTest {
 
   @Test
   void signUp() {
-    // given
-    Member member = new Member("test@test.com");
+    Member member = service.create(new Member("test@test.com", Level.BASIC));
+    Member findMember = service.findById(member.getId());
 
-    // when
-    service.signUp(member);
-    Member findMember = service.findMember(member.getId());
-
-    // then
     Assertions.assertThat(member).isEqualTo(findMember);
   }
 }

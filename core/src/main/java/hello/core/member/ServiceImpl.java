@@ -10,22 +10,22 @@ public class ServiceImpl implements Service {
   private final Repository repository = new MemoryRepository();
 
   @Override
-  public Member signUp(Member member) {
+  public Member create(Member member) {
     return (Member) repository.save(member);
   }
 
   @Override
-  public Member findMember(String id) {
-    return (Member) repository.findById(id);
+  public Member update(Member member) {
+    return (Member) repository.save(member);
   }
 
   @Override
-  public void deleteMember(String id) {
+  public void deleteById(String id) {
     repository.deleteById(id);
   }
 
   @Override
-  public Member updateMember(Member member) {
-    return (Member) repository.save(member);
+  public Member findById(String id) {
+    return (Member) repository.findById(id);
   }
 }

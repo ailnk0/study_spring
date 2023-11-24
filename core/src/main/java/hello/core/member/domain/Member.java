@@ -7,9 +7,9 @@ public class Member extends Item {
   String email;
   Level level;
 
-  public Member(String email) {
+  public Member(String email, Level level) {
     this.email = email;
-    this.level = Level.GENERAL;
+    this.level = level;
   }
 
   public String getEmail() {
