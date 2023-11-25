@@ -1,13 +1,21 @@
 package hello.core.product;
 
+import hello.core.AppConfig;
 import hello.core.product.domain.Product;
 import hello.core.product.domain.Service;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ServiceTest {
 
-  Service service = new ServiceImpl();
+  Service service;
+
+  @BeforeEach
+  public void beforeEach() {
+    AppConfig config = new AppConfig();
+    service = config.productService();
+  }
 
   @Test
   void registerProduct() {

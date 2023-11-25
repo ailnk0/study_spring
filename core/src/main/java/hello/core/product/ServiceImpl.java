@@ -1,13 +1,16 @@
 package hello.core.product;
 
-import hello.core.dataAccess.MemoryRepository;
 import hello.core.dataAccess.Repository;
 import hello.core.product.domain.Product;
 import hello.core.product.domain.Service;
 
 public class ServiceImpl implements Service {
 
-  private final Repository repository = new MemoryRepository();
+  private final Repository repository;
+
+  public ServiceImpl(Repository repository) {
+    this.repository = repository;
+  }
 
   @Override
   public Product create(Product product) {

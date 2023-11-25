@@ -1,13 +1,16 @@
 package hello.core.member;
 
-import hello.core.dataAccess.MemoryRepository;
 import hello.core.dataAccess.Repository;
 import hello.core.member.domain.Member;
 import hello.core.member.domain.Service;
 
 public class ServiceImpl implements Service {
 
-  private final Repository repository = new MemoryRepository();
+  private final Repository repository;
+
+  public ServiceImpl(Repository repository) {
+    this.repository = repository;
+  }
 
   @Override
   public Member create(Member member) {
