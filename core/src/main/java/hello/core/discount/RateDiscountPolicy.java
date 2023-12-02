@@ -2,14 +2,18 @@ package hello.core.discount;
 
 import java.math.BigDecimal;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 @Getter
 public class RateDiscountPolicy implements DiscountPolicy {
 
   public static final BigDecimal MIN_DISCOUNT_RATE = new BigDecimal("0");
   public static final BigDecimal MAX_DISCOUNT_RATE = new BigDecimal("1");
-  private BigDecimal rate;
+  BigDecimal rate;
 
+  @Autowired
   public RateDiscountPolicy(BigDecimal rate) {
     setRate(rate);
   }

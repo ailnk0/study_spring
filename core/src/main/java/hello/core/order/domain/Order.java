@@ -1,7 +1,6 @@
 package hello.core.order.domain;
 
 import hello.core.dataAccess.Item;
-import hello.core.discount.DiscountPolicy;
 import hello.core.member.domain.Member;
 import hello.core.product.domain.Product;
 import lombok.Getter;
@@ -15,7 +14,6 @@ public class Order extends Item {
 
   final Member buyer;
   final Product product;
-  final DiscountPolicy discountPolicy;
   int price = 0;
   int payment = 0;
 }
