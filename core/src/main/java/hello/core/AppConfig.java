@@ -10,6 +10,7 @@ import hello.core.product.ProductServiceImpl;
 import hello.core.product.domain.ProductService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class AppConfig {
@@ -30,6 +31,7 @@ public class AppConfig {
   }
 
   @Bean
+  @Primary
   public Repository repository() {
     return new MemoryRepository();
   }
