@@ -1,5 +1,13 @@
 package hello.core;
 
+import hello.core.dataAccess.MemoryRepository;
+import hello.core.dataAccess.Repository;
+import hello.core.member.MemberServiceImpl;
+import hello.core.member.domain.MemberService;
+import hello.core.order.OrderServiceImpl;
+import hello.core.order.domain.OrderService;
+import hello.core.product.ProductServiceImpl;
+import hello.core.product.domain.ProductService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,22 +15,22 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
   @Bean
-  public hello.core.member.domain.Service memberService() {
-    return new hello.core.member.ServiceImpl(repository());
+  public MemberService memberService() {
+    return new MemberServiceImpl(repository());
   }
 
   @Bean
-  public hello.core.order.domain.Service orderService() {
-    return new hello.core.order.ServiceImpl(repository());
+  public OrderService orderService() {
+    return new OrderServiceImpl(repository());
   }
 
   @Bean
-  public hello.core.product.domain.Service productService() {
-    return new hello.core.product.ServiceImpl(repository());
+  public ProductService productService() {
+    return new ProductServiceImpl(repository());
   }
 
   @Bean
-  public hello.core.dataAccess.Repository repository() {
-    return new hello.core.dataAccess.MemoryRepository();
+  public Repository repository() {
+    return new MemoryRepository();
   }
 }

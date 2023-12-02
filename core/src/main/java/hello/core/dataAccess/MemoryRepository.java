@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MemoryRepository implements Repository {
 
   private static final Map<String, Item> store = new HashMap<>();

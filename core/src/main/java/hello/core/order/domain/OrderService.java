@@ -1,6 +1,6 @@
 package hello.core.order.domain;
 
-public interface Service {
+public interface OrderService {
 
   Order create(Order order);
 

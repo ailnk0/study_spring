@@ -2,13 +2,17 @@ package hello.core.product;
 
 import hello.core.dataAccess.Repository;
 import hello.core.product.domain.Product;
-import hello.core.product.domain.Service;
+import hello.core.product.domain.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class ServiceImpl implements Service {
+@Component
+public class ProductServiceImpl implements ProductService {
 
   private final Repository repository;
 
-  public ServiceImpl(Repository repository) {
+  @Autowired
+  public ProductServiceImpl(Repository repository) {
     this.repository = repository;
   }
 

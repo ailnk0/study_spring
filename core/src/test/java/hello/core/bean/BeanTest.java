@@ -3,6 +3,8 @@ package hello.core.bean;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import hello.core.AppConfig;
+import hello.core.member.MemberServiceImpl;
+import hello.core.member.domain.MemberService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -39,28 +41,28 @@ public class BeanTest {
 
   @Test
   void findBeanByName() {
-    hello.core.member.domain.Service memberService = ac.getBean("memberService",
-        hello.core.member.domain.Service.class);
-    assertThat(memberService).isInstanceOf(hello.core.member.domain.Service.class);
+    MemberService memberService = ac.getBean("memberServiceImpl",
+        MemberService.class);
+    assertThat(memberService).isInstanceOf(MemberService.class);
   }
 
   @Test
   void findBeanByConcrete() {
-    hello.core.member.domain.Service memberService = ac.getBean(
-        hello.core.member.ServiceImpl.class);
-    assertThat(memberService).isInstanceOf(hello.core.member.domain.Service.class);
+    MemberService memberService = ac.getBean(
+        MemberServiceImpl.class);
+    assertThat(memberService).isInstanceOf(MemberService.class);
   }
 
   @Test
   void findBeanByWrongName() {
     Assertions.assertThrows(NoSuchBeanDefinitionException.class,
-        () -> ac.getBean("WrongName", hello.core.member.domain.Service.class));
+        () -> ac.getBean("WrongName", MemberService.class));
   }
 
   @Test
   void findBeanByType() {
-    hello.core.member.domain.Service memberService = ac.getBean(
-        hello.core.member.domain.Service.class);
-    assertThat(memberService).isInstanceOf(hello.core.member.domain.Service.class);
+    MemberService memberService = ac.getBean(
+        MemberService.class);
+    assertThat(memberService).isInstanceOf(MemberService.class);
   }
 }

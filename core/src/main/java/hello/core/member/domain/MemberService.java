@@ -1,6 +1,6 @@
 package hello.core.member.domain;
 
-public interface Service {
+public interface MemberService {
 
   Member create(Member member);
 

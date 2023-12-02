@@ -2,19 +2,20 @@ package hello.core.product;
 
 import hello.core.AppConfig;
 import hello.core.product.domain.Product;
-import hello.core.product.domain.Service;
+import hello.core.product.domain.ProductService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class ServiceTest {
+public class ProductServiceTest {
 
-  Service service;
+  ProductService service;
 
   @BeforeEach
   public void beforeEach() {
-    AppConfig config = new AppConfig();
-    service = config.productService();
+    AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+    service = ac.getBean(ProductService.class);
   }
 
   @Test

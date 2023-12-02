@@ -5,9 +5,9 @@ import hello.core.dataAccess.Item;
 public class Member extends Item {
 
   String email;
-  Level level;
+  MemberLevel level;
 
-  public Member(String email, Level level) {
+  public Member(String email, MemberLevel level) {
     this.email = email;
     this.level = level;
   }
@@ -20,11 +20,11 @@ public class Member extends Item {
     this.email = email;
   }
 
-  public Level getLevel() {
+  public MemberLevel getLevel() {
     return level;
   }
 
-  public void setLevel(Level level) {
+  public void setLevel(MemberLevel level) {
     this.level = level;
   }
 }

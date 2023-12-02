@@ -1,6 +1,6 @@
 package hello.core.product.domain;
 
-public interface Service {
+public interface ProductService {
 
   Product create(Product product);
 

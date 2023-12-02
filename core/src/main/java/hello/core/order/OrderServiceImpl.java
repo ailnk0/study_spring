@@ -6,15 +6,19 @@ import hello.core.discount.FixedDiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.domain.Member;
 import hello.core.order.domain.Order;
-import hello.core.order.domain.Service;
+import hello.core.order.domain.OrderService;
 import hello.core.product.domain.Product;
 import java.math.BigDecimal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class ServiceImpl implements Service {
+@Component
+public class OrderServiceImpl implements OrderService {
 
   private final Repository repository;
 
-  public ServiceImpl(Repository repository) {
+  @Autowired
+  public OrderServiceImpl(Repository repository) {
     this.repository = repository;
   }
 
