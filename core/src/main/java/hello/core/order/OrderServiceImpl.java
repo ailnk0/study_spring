@@ -9,18 +9,14 @@ import hello.core.order.domain.Order;
 import hello.core.order.domain.OrderService;
 import hello.core.product.domain.Product;
 import java.math.BigDecimal;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
   private final Repository repository;
-
-  @Autowired
-  public OrderServiceImpl(Repository repository) {
-    this.repository = repository;
-  }
 
   @Override
   public Order create(Order order) {

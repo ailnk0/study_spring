@@ -3,18 +3,14 @@ package hello.core.product;
 import hello.core.dataAccess.Repository;
 import hello.core.product.domain.Product;
 import hello.core.product.domain.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
   private final Repository repository;
-
-  @Autowired
-  public ProductServiceImpl(Repository repository) {
-    this.repository = repository;
-  }
 
   @Override
   public Product create(Product product) {

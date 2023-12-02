@@ -1,7 +1,9 @@
 package hello.core.discount;
 
 import java.math.BigDecimal;
+import lombok.Getter;
 
+@Getter
 public class RateDiscountPolicy implements DiscountPolicy {
 
   public static final BigDecimal MIN_DISCOUNT_RATE = new BigDecimal("0");
@@ -10,10 +12,6 @@ public class RateDiscountPolicy implements DiscountPolicy {
 
   public RateDiscountPolicy(BigDecimal rate) {
     setRate(rate);
-  }
-
-  public BigDecimal getRate() {
-    return rate;
   }
 
   public void setRate(BigDecimal rate) {

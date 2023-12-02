@@ -3,18 +3,14 @@ package hello.core.member;
 import hello.core.dataAccess.Repository;
 import hello.core.member.domain.Member;
 import hello.core.member.domain.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
   private final Repository repository;
-
-  @Autowired
-  public MemberServiceImpl(Repository repository) {
-    this.repository = repository;
-  }
 
   @Override
   public Member create(Member member) {
