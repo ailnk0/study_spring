@@ -20,5 +20,8 @@ logging:
   level:
     org.hibernate.SQL: debug
 
+    # Log query parameters
+    org.hibernate.type: trace
+
 server:
   port: 8081
