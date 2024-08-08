@@ -4,7 +4,7 @@ spring:
       real_fight_web
 
   datasource:
-    url: jdbc:h2:tcp://localhost/~/h2_test/test;MVCC=TRUE
+    url: jdbc:h2:tcp://localhost/~/h2_test/test
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -18,10 +18,7 @@ spring:
 
 logging:
   level:
-    org:
-      hibernate:
-        SQL: debug
+    org.hibernate.SQL: debug
 
 server:
-  port:
-    8081
+  port: 8081
