@@ -7,13 +7,12 @@ spring:
     active: local
 
   datasource:
-    url: jdbc:mariadb://127.0.0.1:3306/jpa_practice_db
-    username: user
-    password: my-secret-pw
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:h2:mem:test;MODE=MariaDB
+    username: sa
+    password:
 
   jpa:
-    database-platform: org.hibernate.dialect.MariaDBDialect
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     properties:
