@@ -4,7 +4,8 @@ import jakarta.persistence.*
 
 @Entity
 @DiscriminatorValue("A")
-class Album : Item() {
-    var artist: String = ""
+class Album(
+    var artist: String = "",
     var etc: String = ""
-}
+) : Item()
+

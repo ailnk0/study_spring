@@ -5,12 +5,13 @@ import jakarta.persistence.*
 import jakarta.persistence.FetchType.*
 
 @Entity
-class Category {
+class Category(
     @Id
     @GeneratedValue
-    var id: Long = 0
+    @Column(name = "category_id")
+    val id: Long = 0,
 
-    var name: String = ""
+    var name: String,
 
     @ManyToMany
     @JoinTable(
@@ -18,17 +19,21 @@ class Category {
         joinColumns = [JoinColumn(name = "category_id")],
         inverseJoinColumns = [JoinColumn(name = "item_id")]
     )
-    var items: MutableList<Item> = mutableListOf()
+    val items: MutableList<Item> = mutableListOf(),
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_id")
-    var parent: Category? = null
+    var parent: Category? = null,
 
-    @OneToMany(mappedBy = "parent")
-    var child: MutableList<Category> = mutableListOf()
-
+    @OneToMany(mappedBy = "parent", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val children: MutableList<Category> = mutableListOf()
+) {
     fun addChildCategory(child: Category) {
-        this.child.add(child)
+        children.add(child)
         child.parent = this
+    }
+
+    fun addItem(item: Item) {
+        items.add(item)
     }
 }

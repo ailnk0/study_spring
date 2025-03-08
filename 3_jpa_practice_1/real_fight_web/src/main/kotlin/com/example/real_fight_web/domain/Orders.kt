@@ -5,40 +5,47 @@ import jakarta.persistence.FetchType.*
 import java.time.*
 
 @Entity
-class Orders {
+class Orders private constructor(
     @Id
     @GeneratedValue
     @Column(name = "order_id")
-    val id: Long = 0
+    val id: Long = 0,
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
-    lateinit var member: Member
+    val member: Member,
 
-    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
-    val orderItems: MutableList<OrderItem> = mutableListOf()
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val orderItems: MutableList<OrderItem> = mutableListOf(),
 
     @OneToOne(fetch = LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "delivery_id")
-    lateinit var delivery: Delivery
+    val delivery: Delivery,
 
-    val orderDate: LocalDateTime = LocalDateTime.now()
+    val orderDate: LocalDateTime = LocalDateTime.now(),
 
     @Enumerated(EnumType.STRING)
-    val status: OrderStatus = OrderStatus.ORDER
+    var status: OrderStatus = OrderStatus.ORDER
+) {
+    companion object {
+        fun createOrder(member: Member, delivery: Delivery, orderItems: List<OrderItem>): Orders {
+            val order = Orders(member = member, delivery = delivery)
+            order.assignMember(member)
+            order.assignDelivery(delivery)
+            orderItems.forEach { order.addOrderItem(it) }
+            return order
+        }
+    }
 
-    fun assignMember(member: Member) {
-        this.member = member
+    private fun assignMember(member: Member) {
         member.orders.add(this)
+    }
+
+    private fun assignDelivery(delivery: Delivery) {
+        delivery.order = this
     }
 
     fun addOrderItem(orderItem: OrderItem) {
         orderItems.add(orderItem)
-        orderItem.order = this
-    }
-
-    fun assignDelivery(delivery: Delivery) {
-        this.delivery = delivery
-        delivery.order = this
     }
 }

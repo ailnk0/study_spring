@@ -3,17 +3,17 @@ package com.example.real_fight_web.domain
 import jakarta.persistence.*
 
 @Entity
-class Member {
+class Member(
     @Id
     @GeneratedValue
     @Column(name = "member_id")
-    val id: Long = 0
+    val id: Long = 0,
 
-    var name: String = ""
+    var name: String = "",
 
     @Embedded
-    val address: Address = Address.createAddress("", "", "")
+    val address: Address = Address.createAddress("", "", ""),
 
     @OneToMany(mappedBy = "member")
-    val orders: MutableList<Orders> = mutableListOf()
-}
+    val orders: MutableList<Orders> = mutableListOf(),
+)

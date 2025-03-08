@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @DiscriminatorValue("B")
-class Book : Item() {
-    var author: String = ""
+class Book(
+    var author: String = "",
     var isbn: String = ""
-}
+) : Item()

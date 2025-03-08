@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @DiscriminatorValue("M")
-class Movie : Item() {
-    var director: String = ""
+class Movie(
+    var director: String = "",
     var actor: String = ""
-}
+) : Item()

@@ -4,19 +4,18 @@ import jakarta.persistence.*
 import jakarta.persistence.FetchType.*
 
 @Entity
-class Delivery {
-
+class Delivery private constructor(
     @Id
     @GeneratedValue
     @Column(name = "delivery_id")
-    val id: Long = 0
+    val id: Long = 0,
 
     @OneToOne(mappedBy = "delivery", fetch = LAZY)
-    lateinit var order: Orders
+    var order: Orders,
 
     @Embedded
-    val address: Address = Address.createAddress("", "", "")
+    val address: Address,
 
     @Enumerated(EnumType.STRING)
-    val status: DeliveryStatus = DeliveryStatus.READY
-}
+    var status: DeliveryStatus = DeliveryStatus.READY
+)

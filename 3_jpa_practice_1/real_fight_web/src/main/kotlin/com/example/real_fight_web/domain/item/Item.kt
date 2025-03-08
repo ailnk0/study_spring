@@ -6,19 +6,25 @@ import jakarta.persistence.*
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
-abstract class Item {
+open class Item(
     @Id
     @GeneratedValue
     @Column(name = "item_id")
-    val id: Long = 0
+    open val id: Long = 0,
 
-    val name: String = ""
-    val price: Int = 0
-    val stockQuantity: Int = 0
+    open var name: String = "",
 
-    @OneToMany(mappedBy = "item")
-    val orderItems: MutableList<OrderItem> = mutableListOf()
+    open var price: Int = 0,
+
+    open var stockQuantity: Int = 0,
+
+    @OneToMany(mappedBy = "item", cascade = [CascadeType.ALL], orphanRemoval = true)
+    open val orderItems: MutableList<OrderItem> = mutableListOf(),
 
     @ManyToMany(mappedBy = "items")
-    val categories: MutableList<Category> = mutableListOf()
+    open val categories: MutableList<Category> = mutableListOf()
+) {
+    fun addCategory(category: Category) {
+        categories.add(category)
+    }
 }
