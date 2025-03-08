@@ -16,4 +16,8 @@ class Member(
 
     @OneToMany(mappedBy = "member")
     val orders: MutableList<Orders> = mutableListOf(),
-)
+) {
+    fun getMemberId(): Long {
+        return id ?: throw IllegalStateException("아이디가 없습니다.")
+    }
+}

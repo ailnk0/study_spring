@@ -24,6 +24,10 @@ open class Item(
     @ManyToMany(mappedBy = "items")
     open val categories: MutableList<Category> = mutableListOf()
 ) {
+    fun getItemId(): Long {
+        return id ?: throw IllegalStateException("아이디가 없습니다.")
+    }
+
     fun addCategory(category: Category) {
         categories.add(category)
     }

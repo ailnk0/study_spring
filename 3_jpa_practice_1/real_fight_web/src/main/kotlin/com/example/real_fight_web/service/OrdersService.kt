@@ -1,6 +1,7 @@
 package com.example.real_fight_web.service
 
 import com.example.real_fight_web.domain.*
+import com.example.real_fight_web.dto.*
 import com.example.real_fight_web.repository.*
 import org.springframework.stereotype.*
 import org.springframework.transaction.annotation.*
@@ -51,8 +52,8 @@ class OrdersService(
         orders.cancel()
     }
 
-    fun findOrders(): List<Orders> {
+    fun findOrders(ordersSearch: OrdersSearch): List<Orders> {
         // 주문 조회
-        return ordersRepository.findAll()
+        return ordersRepository.findAll(ordersSearch)
     }
 }
