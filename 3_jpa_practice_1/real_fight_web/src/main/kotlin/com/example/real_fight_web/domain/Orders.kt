@@ -15,10 +15,10 @@ class Orders {
     @JoinColumn(name = "member_id")
     lateinit var member: Member
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
     val orderItems: MutableList<OrderItem> = mutableListOf()
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "delivery_id")
     lateinit var delivery: Delivery
 
