@@ -27,7 +27,7 @@ class Orders {
     @Enumerated(EnumType.STRING)
     val status: OrderStatus = OrderStatus.ORDER
 
-    fun setMember(member: Member) {
+    fun assignMember(member: Member) {
         this.member = member
         member.orders.add(this)
     }
@@ -37,7 +37,7 @@ class Orders {
         orderItem.order = this
     }
 
-    fun setDelivery(delivery: Delivery) {
+    fun assignDelivery(delivery: Delivery) {
         this.delivery = delivery
         delivery.order = this
     }

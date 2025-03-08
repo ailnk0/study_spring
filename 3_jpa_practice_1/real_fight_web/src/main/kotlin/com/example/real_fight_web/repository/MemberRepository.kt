@@ -6,7 +6,6 @@ import org.springframework.stereotype.*
 
 @Repository
 class MemberRepository(
-    @PersistenceContext
     private val em: EntityManager
 ) {
     fun save(member: Member): Long {
