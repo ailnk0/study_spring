@@ -1,5 +1,6 @@
-package com.example.real_fight_web
+package com.example.real_fight_web.repository
 
+import com.example.real_fight_web.domain.Member
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.springframework.stereotype.Repository

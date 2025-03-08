@@ -3,13 +3,17 @@ spring:
     name:
       real_fight_web
 
+  profiles:
+    active: local
+
   datasource:
-    url: jdbc:h2:tcp://localhost/~/h2_test/test
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/jpa_practice_db
+    username: user
+    password: my-secret-pw
+    driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
       ddl-auto: update
     properties:
@@ -19,8 +23,6 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
-
-    # Log query parameters
     org.hibernate.type: trace
 
 server:

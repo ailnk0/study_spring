@@ -1,4 +1,4 @@
-package com.example.real_fight_web
+package com.example.real_fight_web.controller
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
