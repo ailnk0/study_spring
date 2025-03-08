@@ -5,7 +5,7 @@ import jakarta.persistence.*
 import jakarta.persistence.FetchType.*
 
 @Entity
-class OrderItem(
+class OrderItem private constructor(
     @Id
     @GeneratedValue
     @Column(name = "order_item_id")
@@ -19,15 +19,12 @@ class OrderItem(
     @JoinColumn(name = "order_id")
     var order: Orders? = null,
 
-    val orderPrice: Int,
-
     val count: Int
 ) {
     companion object {
-        fun createOrderItem(item: Item, orderPrice: Int, count: Int): OrderItem {
+        fun createOrderItem(item: Item, count: Int): OrderItem {
             val orderItem = OrderItem(
                 item = item,
-                orderPrice = orderPrice,
                 count = count
             )
             item.removeStock(count)
@@ -40,6 +37,6 @@ class OrderItem(
     }
 
     fun getTotalPrice(): Int {
-        return orderPrice * count
+        return item.price * count
     }
 }

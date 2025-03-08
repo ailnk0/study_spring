@@ -26,8 +26,9 @@ class MemberRepositoryTest {
         member.name = "memberA"
 
         // when
-        val savedId = memberRepository.save(member)
-        val findMember = memberRepository.findOne(savedId) ?: Member()
+        memberRepository.save(member)
+        val findMember = member.id?.let { memberRepository.findOne(it) }
+            ?: throw IllegalStateException("회원 정보가 없습니다.")
 
         // then
         Assertions.assertThat(findMember).isNotNull()

@@ -16,7 +16,7 @@ class ItemRepository(
         }
     }
 
-    fun findOne(id: Long): Item {
+    fun findOne(id: Long): Item? {
         return em.find(Item::class.java, id)
     }
 

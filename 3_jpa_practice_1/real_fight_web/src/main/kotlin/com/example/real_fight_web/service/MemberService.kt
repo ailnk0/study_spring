@@ -11,7 +11,7 @@ class MemberService(
     private val memberRepository: MemberRepository
 ) {
     @Transactional
-    fun join(member: Member): Long {
+    fun join(member: Member): Long? {
         validateDuplicateMember(member)
         memberRepository.save(member)
         return member.id

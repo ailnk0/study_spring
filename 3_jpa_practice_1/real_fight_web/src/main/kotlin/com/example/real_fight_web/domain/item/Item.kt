@@ -12,11 +12,11 @@ open class Item(
     @Column(name = "item_id")
     open val id: Long? = null,
 
-    open var name: String = "",
+    open var name: String,
 
-    open var price: Int = 0,
+    open var price: Int,
 
-    open var stockQuantity: Int = 0,
+    open var stockQuantity: Int,
 
     @OneToMany(mappedBy = "item", cascade = [CascadeType.ALL], orphanRemoval = true)
     open val orderItems: MutableList<OrderItem> = mutableListOf(),
@@ -35,7 +35,7 @@ open class Item(
     fun removeStock(quantity: Int) {
         val restStock = stockQuantity - quantity
         if (restStock < 0) {
-            throw IllegalStateException("need more stock")
+            throw IllegalStateException("재고 수량 부족")
         }
         stockQuantity = restStock
     }

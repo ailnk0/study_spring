@@ -4,14 +4,14 @@ import jakarta.persistence.*
 import jakarta.persistence.FetchType.*
 
 @Entity
-class Delivery private constructor(
+class Delivery(
     @Id
     @GeneratedValue
     @Column(name = "delivery_id")
     val id: Long? = null,
 
     @OneToOne(mappedBy = "delivery", fetch = LAZY)
-    var order: Orders,
+    var order: Orders? = null,
 
     @Embedded
     val address: Address,

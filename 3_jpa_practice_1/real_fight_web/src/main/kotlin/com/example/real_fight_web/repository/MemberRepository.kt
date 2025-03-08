@@ -8,9 +8,8 @@ import org.springframework.stereotype.*
 class MemberRepository(
     private val em: EntityManager
 ) {
-    fun save(member: Member): Long {
+    fun save(member: Member) {
         em.persist(member)
-        return member.id
     }
 
     fun findOne(id: Long): Member? = em.find(Member::class.java, id)

@@ -39,7 +39,10 @@ class MemberServiceTest {
         // 강제로 flush 수행해서 insert 확인 방법.
         // em.flush()
 
-        assertEquals(member, memberRepository.findOne(member.id))
+        val findMember = member.id?.let { memberRepository.findOne(it) }
+            ?: throw IllegalStateException("회원 정보가 없습니다.")
+
+        assertEquals(member, findMember)
     }
 
     @Test
@@ -75,6 +78,9 @@ class MemberServiceTest {
 
         memberService.join(member)
 
-        assertEquals(member, memberService.findOne(member.id))
+        val findMember = member.id?.let { memberRepository.findOne(it) }
+            ?: throw IllegalStateException("회원 정보가 없습니다.")
+
+        assertEquals(member, findMember)
     }
 }

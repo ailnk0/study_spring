@@ -28,7 +28,7 @@ class Orders private constructor(
     var status: OrderStatus = OrderStatus.ORDER,
 ) {
     companion object {
-        fun createOrder(member: Member, delivery: Delivery, orderItems: List<OrderItem>): Orders {
+        fun createOrders(member: Member, delivery: Delivery, orderItems: List<OrderItem>): Orders {
             val order = Orders(member = member, delivery = delivery)
             order.changeMember(member)
             order.changeDelivery(delivery)

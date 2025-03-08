@@ -19,6 +19,6 @@ class ItemService(private val itemRepository: ItemRepository) {
     }
 
     fun findOne(itemId: Long): Item {
-        return itemRepository.findOne(itemId)
+        return itemRepository.findOne(itemId) ?: throw IllegalStateException("상품 정보가 없습니다.")
     }
 }

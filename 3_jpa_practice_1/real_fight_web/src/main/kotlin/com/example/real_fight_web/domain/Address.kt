@@ -3,14 +3,8 @@ package com.example.real_fight_web.domain
 import jakarta.persistence.*
 
 @Embeddable
-class Address private constructor(
-    val city: String,
-    val street: String,
-    val zipcode: String
-) {
-    companion object {
-        fun createAddress(city: String, street: String, zipcode: String): Address {
-            return Address(city, street, zipcode)
-        }
-    }
-}
+class Address(
+    val city: String = "",
+    val street: String = "",
+    val zipcode: String = ""
+)

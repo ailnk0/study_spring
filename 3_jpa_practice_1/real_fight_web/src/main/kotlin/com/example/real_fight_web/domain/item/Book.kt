@@ -3,8 +3,11 @@ package com.example.real_fight_web.domain.item
 import jakarta.persistence.*
 
 @Entity
-@DiscriminatorValue("B")
+@DiscriminatorValue("BOOK")
 class Book(
-    var author: String = "",
-    var isbn: String = ""
-) : Item()
+    name: String,
+    price: Int,
+    stockQuantity: Int,
+    var author: String,
+    var isbn: String
+) : Item(name = name, price = price, stockQuantity = stockQuantity)
