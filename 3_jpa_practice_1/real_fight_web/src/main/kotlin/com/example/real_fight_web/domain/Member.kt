@@ -7,7 +7,7 @@ class Member(
     @Id
     @GeneratedValue
     @Column(name = "member_id")
-    val id: Long = 0,
+    val id: Long? = null,
 
     var name: String = "",
 

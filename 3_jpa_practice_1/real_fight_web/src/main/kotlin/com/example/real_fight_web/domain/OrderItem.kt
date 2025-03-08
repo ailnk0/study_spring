@@ -9,7 +9,7 @@ class OrderItem(
     @Id
     @GeneratedValue
     @Column(name = "order_item_id")
-    val id: Long = 0,
+    val id: Long? = null,
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "item_id")

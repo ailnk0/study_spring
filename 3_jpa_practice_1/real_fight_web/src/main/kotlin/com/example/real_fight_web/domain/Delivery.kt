@@ -8,7 +8,7 @@ class Delivery private constructor(
     @Id
     @GeneratedValue
     @Column(name = "delivery_id")
-    val id: Long = 0,
+    val id: Long? = null,
 
     @OneToOne(mappedBy = "delivery", fetch = LAZY)
     var order: Orders,

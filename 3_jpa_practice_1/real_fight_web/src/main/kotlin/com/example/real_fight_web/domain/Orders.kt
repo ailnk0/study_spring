@@ -9,7 +9,7 @@ class Orders private constructor(
     @Id
     @GeneratedValue
     @Column(name = "order_id")
-    val id: Long = 0,
+    val id: Long? = null,
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")

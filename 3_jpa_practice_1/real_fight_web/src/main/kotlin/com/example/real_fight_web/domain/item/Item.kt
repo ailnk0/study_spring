@@ -10,7 +10,7 @@ open class Item(
     @Id
     @GeneratedValue
     @Column(name = "item_id")
-    open val id: Long = 0,
+    open val id: Long? = null,
 
     open var name: String = "",
 
@@ -26,5 +26,17 @@ open class Item(
 ) {
     fun addCategory(category: Category) {
         categories.add(category)
+    }
+
+    fun addStock(quantity: Int) {
+        stockQuantity += quantity
+    }
+
+    fun removeStock(quantity: Int) {
+        val restStock = stockQuantity - quantity
+        if (restStock < 0) {
+            throw IllegalStateException("need more stock")
+        }
+        stockQuantity = restStock
     }
 }

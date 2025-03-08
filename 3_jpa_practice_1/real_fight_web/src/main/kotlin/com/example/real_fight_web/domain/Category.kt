@@ -9,7 +9,7 @@ class Category(
     @Id
     @GeneratedValue
     @Column(name = "category_id")
-    val id: Long = 0,
+    val id: Long? = null,
 
     var name: String,
 
