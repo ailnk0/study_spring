@@ -9,7 +9,7 @@ class Address private constructor(
     val zipcode: String
 ) {
     companion object {
-        fun CreateAddress(city: String, street: String, zipcode: String): Address {
+        fun createAddress(city: String, street: String, zipcode: String): Address {
             return Address(city, street, zipcode)
         }
     }

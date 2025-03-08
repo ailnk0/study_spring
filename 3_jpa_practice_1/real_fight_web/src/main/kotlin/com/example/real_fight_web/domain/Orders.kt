@@ -1,6 +1,7 @@
 package com.example.real_fight_web.domain
 
 import jakarta.persistence.*
+import jakarta.persistence.FetchType.*
 import java.time.*
 
 @Entity
@@ -10,14 +11,14 @@ class Orders {
     @Column(name = "order_id")
     val id: Long = 0
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     lateinit var member: Member
 
     @OneToMany(mappedBy = "order")
     val orderItems: MutableList<OrderItem> = mutableListOf()
 
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "delivery_id")
     lateinit var delivery: Delivery
 

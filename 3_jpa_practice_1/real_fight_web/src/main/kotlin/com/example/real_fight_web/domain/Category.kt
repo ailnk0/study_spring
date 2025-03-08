@@ -2,6 +2,7 @@ package com.example.real_fight_web.domain
 
 import com.example.real_fight_web.domain.item.*
 import jakarta.persistence.*
+import jakarta.persistence.FetchType.*
 
 @Entity
 class Category {
@@ -12,12 +13,14 @@ class Category {
     var name: String = ""
 
     @ManyToMany
-    @JoinTable(name = "category_item",
-            joinColumns = [JoinColumn(name = "category_id")],
-            inverseJoinColumns = [JoinColumn(name = "item_id")])
+    @JoinTable(
+        name = "category_item",
+        joinColumns = [JoinColumn(name = "category_id")],
+        inverseJoinColumns = [JoinColumn(name = "item_id")]
+    )
     var items: MutableList<Item> = mutableListOf()
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_id")
     var parent: Category? = null
 

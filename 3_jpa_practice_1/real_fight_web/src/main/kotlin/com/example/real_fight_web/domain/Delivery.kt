@@ -1,6 +1,7 @@
 package com.example.real_fight_web.domain
 
 import jakarta.persistence.*
+import jakarta.persistence.FetchType.*
 
 @Entity
 class Delivery {
@@ -10,11 +11,11 @@ class Delivery {
     @Column(name = "delivery_id")
     val id: Long = 0
 
-    @OneToOne(mappedBy = "delivery")
+    @OneToOne(mappedBy = "delivery", fetch = LAZY)
     lateinit var order: Orders
 
     @Embedded
-    val address: Address = Address()
+    val address: Address = Address.createAddress("", "", "")
 
     @Enumerated(EnumType.STRING)
     val status: DeliveryStatus = DeliveryStatus.READY
