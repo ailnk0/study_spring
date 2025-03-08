@@ -1,14 +1,19 @@
 package com.example.real_fight_web.domain
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
 class Member {
     @Id
     @GeneratedValue
-    var id: Long = 0
-    var username: String = ""
-}
+    @Column(name = "member_id")
+    val id: Long = 0
 
+    var name: String = ""
+
+    @Embedded
+    val address: Address = Address.CreateAddress("", "", "")
+
+    @OneToMany(mappedBy = "member")
+    val orders: MutableList<Orders> = mutableListOf()
+}

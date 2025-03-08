@@ -23,7 +23,7 @@ class MemberRepositoryTest {
     fun testMember() {
         // given
         val member = Member()
-        member.username = "memberA"
+        member.name = "memberA"
 
         // when
         val savedId = memberRepository.save(member)
@@ -31,7 +31,7 @@ class MemberRepositoryTest {
 
         // then
         Assertions.assertThat(findMember.id).isEqualTo(member.id)
-        Assertions.assertThat(findMember.username).isEqualTo(member.username)
+        Assertions.assertThat(findMember.name).isEqualTo(member.name)
 
         // 같은 영속성인지 확인
         Assertions.assertThat(findMember).isEqualTo(member)
