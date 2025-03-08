@@ -26,4 +26,9 @@ class Category {
 
     @OneToMany(mappedBy = "parent")
     var child: MutableList<Category> = mutableListOf()
+
+    fun addChildCategory(child: Category) {
+        this.child.add(child)
+        child.parent = this
+    }
 }
