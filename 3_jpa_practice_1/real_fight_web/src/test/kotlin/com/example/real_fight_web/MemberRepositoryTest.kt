@@ -1,6 +1,6 @@
 package com.example.real_fight_web
 
-import com.example.real_fight_web.domain.Member
+import com.example.real_fight_web.domain.*
 import com.example.real_fight_web.repository.MemberRepository
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -22,8 +22,10 @@ class MemberRepositoryTest {
     // @Rollback(false)
     fun testMember() {
         // given
-        val member = Member()
-        member.name = "memberA"
+        val member = Member(
+            name = "memberA",
+            address = Address("city", "street", "zipcode")
+        )
 
         // when
         memberRepository.save(member)

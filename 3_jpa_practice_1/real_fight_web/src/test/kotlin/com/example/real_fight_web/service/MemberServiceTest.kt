@@ -30,8 +30,10 @@ class MemberServiceTest {
     // 테스트에서 DB에 실제 저장된 것을 확인해보고 싶다면 롤백을 해제한다.
     // @Rollback(false)
     fun join() {
-        val member = Member()
-        member.name = "memberA"
+        val member = Member(
+            name = "memberA",
+            address = Address("city", "street", "zipcode")
+        )
 
         memberService.join(member)
 
@@ -47,11 +49,15 @@ class MemberServiceTest {
 
     @Test
     fun validateDuplicateMember() {
-        val member1 = Member()
-        member1.name = "memberA"
+        val member1 = Member(
+            name = "memberA",
+            address = Address("city", "street", "zipcode")
+        )
 
-        val member2 = Member()
-        member2.name = "memberA"
+        val member2 = Member(
+            name = "memberA",
+            address = Address("city", "street", "zipcode")
+        )
 
         memberService.join(member1)
         assertThrows<IllegalStateException> {
@@ -62,8 +68,14 @@ class MemberServiceTest {
     @Test
     fun findMembers() {
         val members = listOf(
-            Member().apply { name = "memberA" },
-            Member().apply { name = "memberB" }
+            Member(
+                name = "memberA",
+                address = Address("city", "street", "zipcode")
+            ),
+            Member(
+                name = "memberB",
+                address = Address("city", "street", "zipcode")
+            )
         )
 
         members.forEach { memberService.join(it) }
@@ -73,8 +85,10 @@ class MemberServiceTest {
 
     @Test
     fun findOne() {
-        val member = Member()
-        member.name = "memberA"
+        val member = Member(
+            name = "memberA",
+            address = Address("city", "street", "zipcode")
+        )
 
         memberService.join(member)
 
