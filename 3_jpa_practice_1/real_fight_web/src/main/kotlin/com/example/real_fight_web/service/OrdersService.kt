@@ -52,8 +52,13 @@ class OrdersService(
         orders.cancel()
     }
 
-    fun findOrders(ordersSearch: OrdersSearch): List<Orders> {
+    fun findOrdersJpqlStr(ordersSearch: OrdersSearch): List<Orders> {
         // 주문 조회
-        return ordersRepository.findAll(ordersSearch)
+        return ordersRepository.findAllJpqlStr(ordersSearch)
+    }
+
+    fun findOrdersQueryDsl(ordersSearch: OrdersSearch): List<Orders> {
+        // 주문 조회
+        return ordersRepository.findAllQueryDsl(ordersSearch)
     }
 }

@@ -33,7 +33,7 @@ class OrdersController(
 
     @GetMapping("/orders")
     fun orderList(@ModelAttribute("orderSearch") orderSearch: OrdersSearch, model: Model): String {
-        val orders = orderService.findOrders(orderSearch)
+        val orders = orderService.findOrdersJpqlStr(orderSearch)
         model.addAttribute("orders", orders)
         return "order/orderList"
     }

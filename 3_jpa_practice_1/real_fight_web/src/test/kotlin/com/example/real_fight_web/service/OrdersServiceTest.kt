@@ -90,7 +90,7 @@ class OrdersServiceTest {
     inner class SearchOrdersTest {
 
         @Test
-        fun searchOrdersByMember() {
+        fun searchOrdersByMemberJpqlStr() {
             // given
             val orderCount = 2
             ordersService.orders(memberA.getMemberId(), bookA.getItemId(), orderCount)
@@ -99,7 +99,7 @@ class OrdersServiceTest {
 
             // when
             val ordersSearch = OrdersSearch(memberName = memberA.name)
-            val orders = ordersService.findOrders(ordersSearch)
+            val orders = ordersService.findOrdersJpqlStr(ordersSearch)
 
             // then
             Assertions.assertThat(orders).hasSize(2)
@@ -107,7 +107,7 @@ class OrdersServiceTest {
         }
 
         @Test
-        fun searchCancelledOrders() {
+        fun searchCancelledOrdersJpqlStr() {
             // given
             val orderCount = 2
             val ordersId = ordersService.orders(memberA.getMemberId(), bookA.getItemId(), orderCount)
@@ -117,7 +117,42 @@ class OrdersServiceTest {
 
             // when
             val ordersSearch = OrdersSearch(orderStatus = OrderStatus.CANCEL)
-            val orders = ordersService.findOrders(ordersSearch)
+            val orders = ordersService.findOrdersJpqlStr(ordersSearch)
+
+            // then
+            Assertions.assertThat(orders).hasSize(1)
+                .withFailMessage("취소된 주문은 1개여야 합니다.")
+        }
+
+        @Test
+        fun searchOrdersByMemberQueryDsl() {
+            // given
+            val orderCount = 2
+            ordersService.orders(memberA.getMemberId(), bookA.getItemId(), orderCount)
+            ordersService.orders(memberA.getMemberId(), bookB.getItemId(), orderCount)
+            ordersService.orders(memberB.getMemberId(), bookB.getItemId(), orderCount)
+
+            // when
+            val ordersSearch = OrdersSearch(memberName = memberA.name)
+            val orders = ordersService.findOrdersQueryDsl(ordersSearch)
+
+            // then
+            Assertions.assertThat(orders).hasSize(2)
+                .withFailMessage("회원의 주문 내역은 2개여야 합니다.")
+        }
+
+        @Test
+        fun searchCancelledOrdersQueryDsl() {
+            // given
+            val orderCount = 2
+            val ordersId = ordersService.orders(memberA.getMemberId(), bookA.getItemId(), orderCount)
+            ordersService.orders(memberA.getMemberId(), bookB.getItemId(), orderCount)
+            ordersService.orders(memberB.getMemberId(), bookB.getItemId(), orderCount)
+            ordersService.cancelOrders(ordersId)
+
+            // when
+            val ordersSearch = OrdersSearch(orderStatus = OrderStatus.CANCEL)
+            val orders = ordersService.findOrdersQueryDsl(ordersSearch)
 
             // then
             Assertions.assertThat(orders).hasSize(1)
