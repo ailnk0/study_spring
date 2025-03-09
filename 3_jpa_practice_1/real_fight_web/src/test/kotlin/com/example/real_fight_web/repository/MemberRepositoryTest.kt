@@ -1,7 +1,6 @@
-package com.example.real_fight_web
+package com.example.real_fight_web.repository
 
 import com.example.real_fight_web.domain.*
-import com.example.real_fight_web.repository.MemberRepository
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
