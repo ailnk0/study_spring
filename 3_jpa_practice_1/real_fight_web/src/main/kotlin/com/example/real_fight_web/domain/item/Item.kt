@@ -10,7 +10,7 @@ open class Item(
     @Id
     @GeneratedValue
     @Column(name = "item_id")
-    open val id: Long? = null,
+    open var id: Long? = null,
 
     open var name: String,
 
