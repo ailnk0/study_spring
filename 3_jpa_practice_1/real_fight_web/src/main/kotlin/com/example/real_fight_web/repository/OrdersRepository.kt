@@ -17,8 +17,17 @@ class OrdersRepository(
         em.persist(order)
     }
 
+    fun saveAll(orders: List<Orders>) {
+        orders.forEach { save(it) }
+    }
+
     fun findOne(id: Long): Orders? {
         return em.find(Orders::class.java, id)
+    }
+
+    fun count(): Long {
+        return em.createQuery("select count(o) from Orders o", Long::class.javaObjectType)
+            .singleResult
     }
 
     // JPQL 문자열 동적 쿼리

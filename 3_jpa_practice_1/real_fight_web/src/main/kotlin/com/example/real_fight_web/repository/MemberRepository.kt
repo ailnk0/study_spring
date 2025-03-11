@@ -12,6 +12,10 @@ class MemberRepository(
         em.persist(member)
     }
 
+    fun saveAll(members: List<Member>) {
+        members.forEach { save(it) }
+    }
+
     fun findOne(id: Long): Member? = em.find(Member::class.java, id)
 
     fun findAll(): List<Member> {
@@ -23,5 +27,10 @@ class MemberRepository(
         return em.createQuery("select m from Member m where m.name = :name", Member::class.java)
             .setParameter("name", name)
             .resultList
+    }
+
+    fun count(): Long {
+        return em.createQuery("select count(m) from Member m", Long::class.javaObjectType)
+            .singleResult
     }
 }
