@@ -12,7 +12,7 @@ class Member(
     var name: String,
 
     @Embedded
-    var address: Address,
+    var address: Address = Address(),
 
     @OneToMany(mappedBy = "member")
     val orders: MutableList<Orders> = mutableListOf(),
