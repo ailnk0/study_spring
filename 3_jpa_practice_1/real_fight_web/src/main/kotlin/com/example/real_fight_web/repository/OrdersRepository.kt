@@ -30,6 +30,11 @@ class OrdersRepository(
             .singleResult
     }
 
+    fun findAll(): List<Orders> {
+        return em.createQuery("select o from Orders o", Orders::class.java)
+            .resultList
+    }
+
     // JPQL 문자열 동적 쿼리
     fun findAllJpqlStr(ordersSearch: OrdersSearch): List<Orders> {
         val jpql = StringBuilder("SELECT o FROM Orders o JOIN o.member m WHERE 1=1")
@@ -69,5 +74,20 @@ class OrdersRepository(
 
     fun memberNameLike(memberName: String?): BooleanExpression? {
         return memberName?.let { QMember.member.name.like("%$it%") }
+    }
+
+    fun findAllWithMemberDelivery(): List<Orders> {
+        return em.createQuery(
+            "SELECT o FROM Orders o" +
+                    " JOIN FETCH o.member m" +
+                    " JOIN FETCH o.delivery d", Orders::class.java
+        ).resultList
+    }
+
+    fun findAllWithDto(): List<OrdersSimpleDto> {
+        return em.createQuery(
+            "SELECT new com.example.real_fight_web.dto.OrdersSimpleDto(o.id, m.name, o.orderDate, o.status, m.address) FROM Orders o" +
+                    " JOIN o.member m", OrdersSimpleDto::class.java
+        ).resultList
     }
 }
