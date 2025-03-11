@@ -21,6 +21,16 @@ class MemberApiController(
         return SaveMemberResponse(id)
     }
 
+    @PutMapping("/api/v2/member/{id}")
+    fun updateMemberV2(
+        @PathVariable id: Long,
+        @RequestBody @Valid request: UpdateMemberRequest
+    ): UpdateMemberResponse {
+        memberService.update(id, request.name)
+        val findMember = memberService.findOne(id) ?: throw IllegalStateException("회원 정보가 없습니다.")
+        return UpdateMemberResponse(id, findMember.name)
+    }
+
     data class SaveMemberRequest(
         val name: String
     ) {
@@ -31,5 +41,14 @@ class MemberApiController(
 
     data class SaveMemberResponse(
         val id: Long
+    )
+
+    data class UpdateMemberRequest(
+        val name: String
+    )
+
+    data class UpdateMemberResponse(
+        val id: Long,
+        val name: String
     )
 }

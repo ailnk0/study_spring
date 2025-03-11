@@ -24,5 +24,12 @@ class MemberService(
     }
 
     fun findMembers(): List<Member> = memberRepository.findAll()
+
     fun findOne(memberId: Long): Member? = memberRepository.findOne(memberId)
+
+    @Transactional
+    fun update(memberId: Long, name: String) {
+        val member = memberRepository.findOne(memberId) ?: throw IllegalStateException("회원 정보가 없습니다.")
+        member.name = name
+    }
 }
