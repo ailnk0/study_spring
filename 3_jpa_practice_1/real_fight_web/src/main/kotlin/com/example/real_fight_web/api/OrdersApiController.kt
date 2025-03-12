@@ -45,7 +45,7 @@ class OrdersApiController(
     @GetMapping("/api/v3/orders")
     fun ordersV3(): List<OrdersDto> {
         // distinct fetch join으로 최적화
-        // 문제 페이지 안되고 데이터 갯수가 부정확안 문제 발생
+        // 문제: 페이지 안되고 데이터 갯수가 부정확안 문제 발생
         val orders = ordersRepository.findAllWithMemberDeliveryXToMany()
         return orders.map { OrdersDto.fromEntity(it) }
     }
@@ -61,10 +61,10 @@ class OrdersApiController(
         return ordersService.getAllWithPaging(firstResult, maxResult)
     }
 
-//    @GetMapping("/api/v4/orders")
-//    fun ordersV4(): List<OrdersDto> {
-//        // 고수준 최적화 - JPA에서 DTO로 바로 조회
-//        // 약간 더 쿼리 최적화 가능하지만 아키텍처 포기
-//        return ordersRepository.findAllXWithDtoXToOne()
-//    }
+    @GetMapping("/api/v4/orders")
+    fun ordersV4(): List<OrdersFlatDto> {
+        // 고수준 최적화 - JPA에서 DTO로 바로 조회
+        // 약간 더 쿼리 최적화 가능하지만 아키텍처 포기
+        return ordersService.getAllWithDtoXToMany()
+    }
 }

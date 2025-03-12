@@ -9,7 +9,7 @@ data class OrdersDto(
     var orderDate: LocalDateTime,
     var orderStatus: OrderStatus,
     var address: Address,
-    var orderItems: List<OrdersItemDto>
+    var orderItems: List<OrdersItemDto> = emptyList()
 ) {
     companion object {
         fun fromEntity(orders: Orders): OrdersDto {

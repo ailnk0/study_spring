@@ -87,7 +87,7 @@ class OrdersRepository(
             .resultList
     }
 
-    fun findAllXWithDtoXToOne(): List<OrdersSimpleDto> {
+    fun findAllWithDtoXToOne(): List<OrdersSimpleDto> {
         return em.createQuery(
             "SELECT new com.example.real_fight_web.dto.OrdersSimpleDto(o.id, m.name, o.orderDate, o.status, m.address) FROM Orders o" +
                     " JOIN o.member m", OrdersSimpleDto::class.java
@@ -108,5 +108,51 @@ class OrdersRepository(
             .setFirstResult(2) // 페이징 불가능 - 동작하지 않음
             .setMaxResults(100) // 페이징 불가능 - 동작하지 않음
             .resultList
+    }
+
+    fun findAllWithDtoXToMany(): List<OrdersDto> {
+        val result = findOrdersDto()
+        val orderIds = result.map { it.orderId }
+
+        val orderItems = em.createQuery(
+            "SELECT new com.example.real_fight_web.dto.OrdersItemDto(oi.id, oi.item, oi.count)" +
+                    " FROM OrdersItem oi" +
+                    " JOIN oi.item i" +
+                    " WHERE oi.order.id int :orderIds", OrdersItemDto::class.java
+        )
+            .setParameter("orderIds", orderIds)
+            .resultList
+
+        result.forEach {
+            it.orderItems = orderItems.filter { oi -> oi.id == it.orderId }
+        }
+        return result
+    }
+
+    fun findOrdersItemDto( orderId: Long): List<OrdersItemDto> {
+        return em.createQuery(
+            "SELECT new com.example.real_fight_web.dto.OrdersItemDto(oi.id, oi.item, oi.count)" +
+                    " FROM OrdersItem oi" +
+                    " JOIN oi.item i" +
+                    " WHERE oi.order.id = :orderId", OrdersItemDto::class.java
+        ).resultList
+    }
+
+    fun findOrdersDto(): List<OrdersDto> {
+        return em.createQuery(
+            "SELECT new com.example.real_fight_web.dto.OrdersDto(o.id, m.name, o.orderDate, o.status, m.address)" +
+                    " FROM Orders o" +
+                    " JOIN o.member m", OrdersDto::class.java
+        ).resultList
+    }
+
+    fun findOrdersFlatDto(): List<OrdersFlatDto> {
+        return em.createQuery(
+            "SELECT new com.example.real_fight_web.dto.OrdersFlatDto(o.id, m.name, o.orderDate, o.status, m.address, i.name, oi.count)" +
+                    " FROM Orders o" +
+                    " JOIN o.member m" +
+                    " JOIN o.orderItems oi" +
+                    " JOIN oi.item i", OrdersFlatDto::class.java
+        ).resultList
     }
 }

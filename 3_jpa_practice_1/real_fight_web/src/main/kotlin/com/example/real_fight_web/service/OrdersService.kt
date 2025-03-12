@@ -74,4 +74,12 @@ class OrdersService(
             OrdersDto.fromEntity(it) // Lazy 강제 초기화
         }
     }
+
+    fun getAllWithDtoXToMany(): List<OrdersFlatDto> {
+        // 고수준 최적화 - JPA에서 DTO로 바로 조회
+        // 약간 더 쿼리 최적화 가능하지만 아키텍처 포기
+        val flats = ordersRepository.findOrdersFlatDto()
+        val uniqueFlats = flats.distinctBy { it.id }
+        return uniqueFlats
+    }
 }

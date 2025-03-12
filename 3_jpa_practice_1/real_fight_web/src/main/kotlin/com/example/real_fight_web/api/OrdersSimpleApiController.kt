@@ -48,6 +48,6 @@ class OrdersSimpleApiController(
     fun ordersV4(): List<OrdersSimpleDto> {
         // 고수준 최적화 - JPA에서 DTO로 바로 조회
         // 약간 더 쿼리 최적화 가능하지만 아키텍처 포기
-        return ordersRepository.findAllXWithDtoXToOne()
+        return ordersRepository.findAllWithDtoXToOne()
     }
 }
