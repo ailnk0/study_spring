@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class RealFightWebApplication
 
 fun main(args: Array<String>) {
-	runApplication<RealFightWebApplication>(*args)
+    runApplication<RealFightWebApplication>(*args)
 }

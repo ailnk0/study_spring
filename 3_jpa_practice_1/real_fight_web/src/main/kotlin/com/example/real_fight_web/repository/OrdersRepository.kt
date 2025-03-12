@@ -76,18 +76,37 @@ class OrdersRepository(
         return memberName?.let { QMember.member.name.like("%$it%") }
     }
 
-    fun findAllWithMemberDelivery(): List<Orders> {
+    fun findAllWithMemberDeliveryXToOne(first: Int = 0, max: Int = 100): List<Orders> {
         return em.createQuery(
             "SELECT o FROM Orders o" +
                     " JOIN FETCH o.member m" +
                     " JOIN FETCH o.delivery d", Orders::class.java
-        ).resultList
+        )
+            .setFirstResult(first)
+            .setMaxResults(max)
+            .resultList
     }
 
-    fun findAllWithDto(): List<OrdersSimpleDto> {
+    fun findAllXWithDtoXToOne(): List<OrdersSimpleDto> {
         return em.createQuery(
             "SELECT new com.example.real_fight_web.dto.OrdersSimpleDto(o.id, m.name, o.orderDate, o.status, m.address) FROM Orders o" +
                     " JOIN o.member m", OrdersSimpleDto::class.java
         ).resultList
+    }
+
+    fun findAllWithMemberDeliveryXToMany(): List<Orders> {
+        // JPQL distinct 키워드를 사용하면 DB에서 중복을 제거해준다.
+        // 단점1: 페이징 불가능
+        // 단점2: 컬렉션 fetch join은 1개만 사용 가능
+        return em.createQuery(
+            "SELECT dictinct o FROM Orders o" +
+                    " JOIN FETCH o.member m" +
+                    " JOIN FETCH o.delivery d" +
+                    " JOIN FETCH o.orderItems oi" + // 컬렉션 fetch join
+                    " JOIN FETCH oi.item i", Orders::class.java
+        )
+            .setFirstResult(2) // 페이징 불가능 - 동작하지 않음
+            .setMaxResults(100) // 페이징 불가능 - 동작하지 않음
+            .resultList
     }
 }

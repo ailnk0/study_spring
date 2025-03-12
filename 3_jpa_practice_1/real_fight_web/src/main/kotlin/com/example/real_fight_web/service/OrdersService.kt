@@ -61,4 +61,17 @@ class OrdersService(
         // 주문 조회
         return ordersRepository.findAllQueryDsl(ordersSearch)
     }
+
+    fun getAllWithPaging(first: Int = 0, max: Int = 100): List<OrdersDto> {
+        // XToOne 관계만 fetch join으로 최적화
+        // 페이징 가능
+        val orders = ordersRepository.findAllWithMemberDeliveryXToOne(first, max)
+
+        // XToMany는 Batch Lazy Loading으로 조회
+        // application.yml에 spring.jpa.properties.hibernate.default_batch_fetch_size: 100 추가
+        // n번 쿼리가 아니라, 최대 batch size만큼 쿼리로 조회
+        return orders.map {
+            OrdersDto.fromEntity(it) // Lazy 강제 초기화
+        }
+    }
 }
